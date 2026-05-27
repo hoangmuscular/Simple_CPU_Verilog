@@ -7,11 +7,17 @@ module instruction_register (
     output [4:0] operand   
 );
 
-    // 1. TODO: Declare an internal register to store the instruction data
-    // 2. TODO: Implement a sequential logic block triggered by the positive edge of the clock
-    // 3. TODO: Implement synchronous active-high reset to clear the register
-    // 4. TODO: Implement logic to load data_in into the register when ld_ir is active
-    // 5. TODO: Implement combinational logic to extract the 3-bit opcode from the stored instruction
-    // 6. TODO: Implement combinational logic to extract the 5-bit operand from the stored instruction
+    reg [7:0] ir_reg;         
+    always @(posedge clk) begin
+        if (rst) begin
+            ir_reg <= 8'b0;  
+        end
+        else if (ld_ir) begin
+            ir_reg <= data_in;
+        end
+    end
+    assign opcode = ir_reg[7:5];
+    assign operand = ir_reg[4:0];
+
 
 endmodule
