@@ -6,8 +6,14 @@ module accumulator (
     output reg [31:0] ac_out 
 );
 
-    // 1. TODO: Implement a sequential logic block triggered by the positive edge of the clock
-    // 2. TODO: Implement synchronous active-high reset to clear the accumulator
-    // 3. TODO: Implement logic to load new data into the accumulator when the load signal is active
+    always @(posedge clk) begin
+   if(rst) begin
+      ac_out <= 8'd0;
+   end else begin
+      if (ld_ac) begin
+         ac_out <= data_in;
+      end
+   end
+end
 
 endmodule
