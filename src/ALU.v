@@ -5,9 +5,19 @@ module alu (
     output reg [31:0] alu_out,
     output zero 
 );
-    // 1. TODO: Implement combinational logic to set the zero flag if inA is 0
-    // 2. TODO: Implement combinational logic to perform arithmetic and logic operations based on the opcode
-    // 3. TODO: Define operations for HLT, SKZ, ADD, AND, XOR, LDA, STO, JMP instructions
-    // 4. TODO: Assign the result to alu_out
+    assign zero = (inA == 8'b00000000) ? 1'b1 : 1'b0;
+always @(*) begin
+   case (opcode)
+            3'b000: alu_out = inA;         // HLT
+            3'b001: alu_out = inA;         // SKZ
+            3'b010: alu_out = inA + inB;   // ADD
+            3'b011: alu_out = inA & inB;   // AND
+            3'b100: alu_out = inA ^ inB;   // XOR
+            3'b101: alu_out = inB;         // LDA
+            3'b110: alu_out = inA;         // STO
+            3'b111: alu_out = inA;         // JMP
+            default: alu_out = 8'd0;     
+        endcase
+end
 
 endmodule
