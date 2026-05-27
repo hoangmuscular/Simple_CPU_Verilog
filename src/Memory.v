@@ -6,12 +6,16 @@ module memory (
     inout [31:0] data  
 );
 
-    // 1. TODO: Declare a 2D array of registers to represent memory cells (e.g., 32 cells of 32 bits)
-    // 2. TODO: Declare a register to hold the output data
-    // 3. TODO: Implement a sequential logic block triggered by the positive edge of the clock for writing data
-    // 4. TODO: Ensure writing only occurs when wr is active and rd is inactive
-    // 5. TODO: Implement a sequential logic block triggered by the positive edge of the clock for reading data
-    // 6. TODO: Ensure reading only occurs when rd is active and wr is inactive
-    // 7. TODO: Implement tri-state buffer logic for the bidirectional data bus
+    reg [7:0] mem_array [0:31];
+    reg [7:0] data_out;
+    always @(posedge clk) begin
+        if (wr) begin
+            mem_array[addr] <= data; 
+        end
+        if (rd) begin
+            data_out <= mem_array[addr]; 
+        end
+    end
+    assign data = (rd && !wr) ? data_out : 8'bzzzzzzzz;
 
 endmodule
